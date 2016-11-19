@@ -26,14 +26,6 @@ UefiMain (
 
   // Get environment variable, testing for L"A" or L"B" value 
   gRT->GetVariable(ToggleKey, &gShellVariableGuid, 0, &BuffSize, ToggleValue);  
-  switch (ToggleValue) { 
-    case L"A":
-      *TextPath = L"FS1:\\boot_a.nsh";
-      break; 
-    case L"B":
-      *TextPath = L"FS1:\\boot_b.nsh";
-      break;
-  }
  
   // Get count variable, ensuring previous boot was successful
   gRT->GetVariable(CountKey, &gShellVariableGuid, 0, &BuffSize, CountValue); 
@@ -87,6 +79,12 @@ UefiMain (
                                NULL,
                                EFI_OPEN_PROTOCOL_GET_PROTOCOL);
   }
+  
+  gRT->SetVariable(CountKey, 
+                   &gShellVariableGuid, 
+                   EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
+                   BuffSize, 
+                   L"1");
 
   Status = gEfiShellProtocol->Execute(&ImageHandle, TextPath, NULL, NULL);
   Print(L"execute status: %p\n", Status);
