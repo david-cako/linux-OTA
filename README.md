@@ -1,5 +1,7 @@
 #EFI-boot-toggle
 
+Still in early stages.
+
 EFI program allowing for A/B split booting based on a linux-accessible EFI variable.
 
 Standard use case is OTA-update implementations, where you have this program invoked by startup.nsh, and then have a boot_a.nsh and boot_b.nsh for each image.
