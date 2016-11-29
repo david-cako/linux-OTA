@@ -20,6 +20,8 @@ UefiMain (
   void *ToggleValue[10];
   void *CountValue[10];
   CHAR16 *TextPath;
+  CONST CHAR16 *PathA = L"FS1:\\boot_a.nsh";
+  CONST CHAR16 *PathB = L"FS1:\\boot_b.nsh";
   UINTN BufferSize = 0;
   EFI_HANDLE *Buffer = NULL;
   UINTN HandleCounter;
@@ -33,10 +35,10 @@ UefiMain (
     case L"0":
       switch (ToggleValue) { 
         case L"A":
-          *TextPath = L"FS1:\\boot_a.nsh";
+          TextPath = PathA;
           break; 
         case L"B":
-          *TextPath = L"FS1:\\boot_b.nsh";
+          TextPath = PathB;
           break;
       }
       break; 
@@ -48,7 +50,7 @@ UefiMain (
                              EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
                              BuffSize, 
                              L"B");
-            *TextPath = L"FS1:\\boot_b.nsh";
+            TextPath = PathB;
             break;
           case L"B":
             gRT->SetVariable(ToggleKey, 
@@ -56,7 +58,7 @@ UefiMain (
                              EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
                              BuffSize, 
                              L"A");
-            *TextPath = L"FS1:\\boot_a.nsh";
+            TextPath = PathA;
             break;
       }
       break;
