@@ -35,67 +35,59 @@ UefiMain (
     gRT->GetVariable(UpdateKey, &gShellVariableGuid, 0, 3, UpdateValue); 
 
     // test if update flag is enabled
-    switch (UpdateValue) {
-        case L"0":  // no update in process
-            switch (ToggleValue) { 
-                case L"A":
-                    TextPath = PathA;
-                    break; 
-                case L"B":
-                    TextPath = PathB;
-                    break;
+    if (UpdateValue == L"0"){ // no update in process
+            if (ToggleValue == L"A"){
+                TextPath = PathA;
+            } 
+            else if (ToggleValue == L"B"){ 
+                TextPath = PathB;
             }
-            break;
-        case L"1":  // update in process
-            // Get count variable, ensuring previous boot wasn't failed
-            gRT->GetVariable(CountKey, &gShellVariableGuid, 0, 3, CountValue); 
-            switch (CountValue) { 
-                case L"0":
-                    switch (ToggleValue) { 
-                        case L"A":
-                            TextPath = PathA;
-                            break; 
-                        case L"B":
-                            TextPath = PathB;
-                            break;
-                        gRT->SetVariable(CountKey, 
+    }
+    else if (UpdateValue == L"1"){  // update in process
+        // Get count variable, ensuring previous boot wasn't failed
+        gRT->GetVariable(CountKey, &gShellVariableGuid, 0, 3, CountValue); 
+        if (CountValue == L"0"){ 
+            if (ToggleValue == L"A"){ 
+                TextPath = PathA;
+            }
+            else if (ToggleValue == L"B"){
+                TextPath = PathB;
+            }
+            gRT->SetVariable(CountKey, 
+                    &gShellVariableGuid, 
+                    EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
+                    3, 
+                    L"1");
+        } 
+        else if (CountValue == L"1"){ // Previous boot unsuccessful, set to opposite boot toggle value
+            if (ToggleValue == L"A"){ 
+                gRT->SetVariable(ToggleKey, 
                             &gShellVariableGuid, 
                             EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
                             3, 
-                            L"1");
-                    }
-                    break; 
-                case L"1": // Previous boot unsuccessful, set to opposite boot toggle value
-                    switch (ToggleValue) { 
-                        case L"A":
-                            gRT->SetVariable(ToggleKey, 
-                                            &gShellVariableGuid, 
-                                            EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
-                                            3, 
-                                            L"B");
-                            TextPath = PathB;
-                            break;
-                        case L"B":
-                            gRT->SetVariable(ToggleKey, 
-                                            &gShellVariableGuid, 
-                                            EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
-                                            3, 
-                                            L"A");
-                            TextPath = PathA;
-                            break;
-                    }
-                    gRT->SetVariable(UpdateKey, 
-                                    &gShellVariableGuid, 
-                                    EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
-                                    3, 
-                                    L"0");
-                    gRT->SetVariable(CountKey, 
-                                    &gShellVariableGuid, 
-                                    EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
-                                    3, 
-                                    L"0");
-                    break;
+                            L"B");
+                TextPath = PathB;
             }
+            else if (ToggleValue == L"B"){
+                gRT->SetVariable(ToggleKey, 
+                            &gShellVariableGuid, 
+                            EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
+                            3, 
+                            L"A");
+                TextPath = PathA;
+            }
+            gRT->SetVariable(UpdateKey, 
+                        &gShellVariableGuid, 
+                        EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
+                        3, 
+                        L"0");
+            gRT->SetVariable(CountKey, 
+                        &gShellVariableGuid, 
+                        EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
+                        3, 
+                        L"0");
+        }
+    }
 
     // Call LocateHandle to get BufferSize
     Status = gBS->LocateHandle(ByProtocol, &gEfiShellProtocolGuid, NULL, &BufferSize, Buffer);  
