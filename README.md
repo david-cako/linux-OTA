@@ -12,14 +12,14 @@ EFI variable "BOOTTOGGLE" can be made accessible in Linux through `efivarfs` int
 - if `UPDATEFLAG` == 0:
     - boot `BOOTTOGGLE`
 - if `UPDATEFLAG` == 1:
-    - if `BOOTCOUNT` == 0:
+    - if `BOOTCOUNT` == 0 (not yet attempted):
         - `BOOTCOUNT` = 1
         - boot `BOOTTOGGLE`
-    - if `BOOTCOUNT` == 1:
+    - if `BOOTCOUNT` == 1 (boot from new image unsucessful):
         - `BOOTTOGGLE` = opposite script
         - `UPDATEFLAG` = 0
         - `BOOTCOUNT` = 0
-        - boot new `BOOTTOGGLE`
+        - boot modified `BOOTTOGGLE`
 
 #### linux init script actions:
 - if `UPDATEFLAG` == 0:
