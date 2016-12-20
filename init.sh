@@ -1,6 +1,6 @@
 #!/bin/bash
 ### BEGIN INIT INFO
-# Provides:          efi-ota
+# Provides:          linux-ota
 # Required-Start:
 # Required-Stop:
 # Default-Start:     2 3 4 5
@@ -17,6 +17,7 @@ mount -t efivarfs none /sys/firmware/efi/efivars;
 if [[ $(cat $UPDATEFLAG) == *"1"* ]]; then
     echo -n -e "\x07\x00\x30\x00\x00" > $UPDATEFLAG     # "0"
     echo -n -e "\x07\x00\x30\x00\x00" > $BOOTCOUNT      # "0"
+    echo "`date`: boot successful.  UPDATEFLAG and BOOTCOUNT set to 0."
 fi
 
 exit 0
