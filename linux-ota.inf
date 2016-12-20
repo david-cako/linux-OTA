@@ -13,7 +13,7 @@
 #
 
 [Sources]
-  BootToggle.c
+  linux-ota.c
 
 [Packages]
   MdePkg/MdePkg.dec
