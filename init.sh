@@ -15,8 +15,8 @@ BOOTCOUNT=/sys/firmware/efi/efivarfs/BOOTCOUNT-6302d008-7f9b-4f30-87ac-60c9fef5d
 mount -t efivarfs none /sys/firmware/efi/efivars;
 
 if [[ $(cat $UPDATEFLAG) == *"1"* ]]; then
-    echo "0" > $UPDATEFLAG
-    echo "0" > $BOOTCOUNT
+    echo -n -e "\x07\x00\x30\x00\x00" > $UPDATEFLAG     # "0"
+    echo -n -e "\x07\x00\x30\x00\x00" > $BOOTCOUNT      # "0"
 fi
 
 exit 0
