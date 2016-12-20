@@ -30,7 +30,7 @@ UefiMain (
 
     // Get toggle variable
     gRT->GetVariable(ToggleKey, &gShellVariableGuid, 0, 3, ToggleValue);  
-  
+
     // Get update flag value
     gRT->GetVariable(UpdateKey, &gShellVariableGuid, 0, 3, UpdateValue); 
 

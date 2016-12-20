@@ -22,7 +22,7 @@ class Update(Object):
                 b = f.read(1)
 
     def fetch_update(self):
-        # check current image and write to opposite image
+        # check current image and write to opposite image.  will probably need to add tar extraction and initramfs.
         if self.current_image == "A":
             output_path = BOOT_PATH + "bzImage_b.efi"
         elif self.current_image == "B":

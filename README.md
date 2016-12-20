@@ -8,6 +8,9 @@ to set `UPDATEFLAG` and `BOOTCOUNT` to zero on successful boot.
 
 Compiles on Linux using EDK.  Couldn't get EDK working on macOS.
 
+Boot parititon requires two startup scripts, `boot_a.nsh` and `boot_b.nsh`, which each boot separate versions
+of your boot image.
+
 #### efi actions:
 - if `UPDATEFLAG` == 0:
     - boot `BOOTTOGGLE`
