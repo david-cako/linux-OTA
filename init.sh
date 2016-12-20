@@ -1,6 +1,6 @@
 #!/bin/bash
 ### BEGIN INIT INFO
-# Provides:          efi-boot-toggle
+# Provides:          efi-ota
 # Required-Start:
 # Required-Stop:
 # Default-Start:     2 3 4 5

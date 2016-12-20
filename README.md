@@ -1,10 +1,10 @@
-#EFI-boot-toggle
+#EFI-OTA
 
-EFI program allowing for A/B split booting based on a linux-accessible EFI variable.
+Simple EFI program allowing for safe OTA updates using A/B-split booting.
 
-Standard use case is OTA-update implementations, where you have this program invoked by startup.nsh, and then have a boot_a.nsh and boot_b.nsh for each image.
-
-EFI variable "BOOTTOGGLE" can be made accessible in Linux through `efivarfs` interface, which you can then set to "A" or "B" to boot from an updated image in-place, while allowing fallback for failed updates.  An init script is used to set update flag and boot count to zero on successful boot.
+EFI variable `BOOTTOGGLE` is made accessible in Linux through `efivarfs` interface, which is then set to "A" or 
+"B" to boot from an updated image in-place, while allowing fallback for failed updates.  An init script is used 
+to set `UPDATEFLAG` and `BOOTCOUNT` to zero on successful boot.
 
 Compiles on Linux using EDK.  Couldn't get EDK working on macOS.
 
