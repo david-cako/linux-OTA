@@ -7,7 +7,7 @@ UPDATE_URL = "URL"
 CURRENT_RELEASE = os.environ("VARIABLE")
 BOOT_PATH = "/mnt/flash/"
 
-logging.basicConfig(filename='/var/log/efi-ota.log', level=logging.INFO)
+logging.basicConfig(filename='/var/log/linux-ota.log', level=logging.INFO)
 
 class Update(Object):
     def __init__(self, update_url):

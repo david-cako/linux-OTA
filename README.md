@@ -1,6 +1,6 @@
-#EFI-OTA
+#linux OTA
 
-Simple EFI program allowing for safe OTA updates using A/B-split booting.
+Simple EFI program allowing for safe OTA updates of Linux images using A/B-split booting.
 
 EFI variable `BOOTTOGGLE` is made accessible in Linux through `efivarfs` interface, which is then set to "A" or 
 "B" to boot from an updated image in-place, while allowing fallback for failed updates.  An init script is used 

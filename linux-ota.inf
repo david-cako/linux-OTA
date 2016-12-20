@@ -1,6 +1,6 @@
 [Defines]
   INF_VERSION                    = 0x00010006
-  BASE_NAME                      = EFI-OTA 
+  BASE_NAME                      = linux-ota 
   FILE_GUID                      = 7b3ca3b8-ee1b-489c-b300-24544a7bd418
   MODULE_TYPE                    = UEFI_APPLICATION
   VERSION_STRING                 = 1.0
