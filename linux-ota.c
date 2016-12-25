@@ -7,6 +7,18 @@
 #include <Library/MemoryAllocationLib.h>
 #include <Guid/ShellVariableGuid.h>
 
+void SetVar (
+    IN CHAR16 *VarKey
+    IN CHAR16 *VarVal
+    )
+{
+    gRT->SetVariable(VarKey, 
+                    &gShellVariableGuid, 
+                    EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
+                    3, 
+                    *VarVal);
+}
+
 EFI_STATUS
 EFIAPI
 UefiMain (
@@ -53,39 +65,19 @@ UefiMain (
             else if (ToggleValue == L"B"){
                 TextPath = PathB;
             }
-            gRT->SetVariable(CountKey, 
-                    &gShellVariableGuid, 
-                    EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
-                    3, 
-                    L"1");
+            SetVar(CountKey, L"1");
         } 
         else if (CountValue == L"1"){ // Previous boot unsuccessful, set to opposite boot toggle value
             if (ToggleValue == L"A"){ 
-                gRT->SetVariable(ToggleKey, 
-                            &gShellVariableGuid, 
-                            EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
-                            3, 
-                            L"B");
+                SetVar(ToggleKey, L"B");
                 TextPath = PathB;
             }
             else if (ToggleValue == L"B"){
-                gRT->SetVariable(ToggleKey, 
-                            &gShellVariableGuid, 
-                            EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
-                            3, 
-                            L"A");
+                SetVar(ToggleKey, L"A");
                 TextPath = PathA;
             }
-            gRT->SetVariable(UpdateKey, 
-                        &gShellVariableGuid, 
-                        EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
-                        3, 
-                        L"0");
-            gRT->SetVariable(CountKey, 
-                        &gShellVariableGuid, 
-                        EFI_VARIABLE_NON_VOLATILE|EFI_VARIABLE_BOOTSERVICE_ACCESS|EFI_VARIABLE_RUNTIME_ACCESS,
-                        3, 
-                        L"0");
+            SetVar(UpdateKey, L"0");
+            SetVar(CountKey, L"0");
         }
     }
 
