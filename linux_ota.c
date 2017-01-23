@@ -7,13 +7,13 @@
 #include <Library/MemoryAllocationLib.h>
 #include <Guid/ShellVariableGuid.h>
 
-UINTN VarBuffSize = 3;
+UINTN VarBuffSize = 10;
 CHAR16 *UpdateKey = L"UPDATEFLAG";  
 CHAR16 *ToggleKey = L"BOOTTOGGLE";
 CHAR16 *CountKey = L"BOOTCOUNT";
-void *UpdateValue[3]; // these might need to be larger
-void *ToggleValue[3];
-void *CountValue[3];
+void *UpdateValue[10]; // these might need to be larger
+void *ToggleValue[10];
+void *CountValue[10];
 CHAR16 *TextPath;
 CONST CHAR16 *PathA = L"FS1:\\boot_a.nsh";
 CONST CHAR16 *PathB = L"FS1:\\boot_b.nsh";
