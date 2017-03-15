@@ -1,4 +1,4 @@
-#linux OTA
+# linux OTA
 
 Simple EFI program allowing for safe OTA updates of Linux images using A/B-split booting.
 
